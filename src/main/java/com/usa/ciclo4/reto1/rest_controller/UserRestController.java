@@ -37,9 +37,8 @@ public class UserRestController {
 		log.info("Guardando un nuevo usuario en la DB");
 		try {
 			service.createUser(user);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception ex) {
+			log.error(ex.getMessage());
 		}
 	}
 
