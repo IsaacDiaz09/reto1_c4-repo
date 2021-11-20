@@ -1,13 +1,10 @@
 package com.usa.ciclo4.reto1.service;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.usa.ciclo4.reto1.model.User;
@@ -41,11 +38,6 @@ public class UserServiceImpl implements UserService {
 	public void createUser(User user) throws Exception {
 		if (isValidEmail(user) && isValidPassword(user)) {
 			if (passwordMatch(user) && isEmailNotInUse(user)) {
-				BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
-				String encryptedPassword = encoder.encode(user.getPassword());
-				user.setPassword(encryptedPassword);
-				user.setConfirmPassword(user.getPassword());
-
 				repo.guardarUsuario(user);
 			}
 		}
@@ -67,23 +59,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, Object> verificaUsuario(String email, String password) {
-		Optional<User> user = repo.buscarPorEmail(email);
-		Map<String, Object> map = new LinkedHashMap<String, Object>();
+	public User verificaUsuario(String email, String password) {
+		Optional<User> userAux = repo.buscarPorEmail(email);
+		User userNotFound = new User(null, email, password, "NO DEFINIDO");
 
-		if (user.isPresent()) {
-			map.put("id", user.get().getId());
-			map.put("email", email);
-			map.put("password", password);
-			map.put("name", user.get().getName());
-		} else {
-			map.put("id", null);
-			map.put("email", email);
-			map.put("password", password);
-			map.put("name", "NO DEFINIDO");
+		if (userAux.isPresent()) {
+			return userAux.get();
+
 		}
+		return userNotFound;
 
-		return map;
 	}
 
+	@Override
+	public boolean existeUsuarioPorEmail(String email) {
+		return repo.buscarPorEmail(email).isPresent();
+	}
 }

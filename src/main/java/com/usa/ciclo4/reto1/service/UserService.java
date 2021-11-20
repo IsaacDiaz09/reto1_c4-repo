@@ -1,10 +1,8 @@
 package com.usa.ciclo4.reto1.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.usa.ciclo4.reto1.model.User;
-
 
 public interface UserService {
 
@@ -49,17 +47,26 @@ public interface UserService {
 	 * @return boolean
 	 */
 	boolean isValidPassword(User user);
-	
+
 	/**
 	 * @return Una lista con todos los usuarios registrados
 	 */
 	List<User> listUsers();
-	
+
 	/**
-	 * metodo a llamar por el rest controler, genera respuesta de si un usuario existe o no
+	 * metodo a llamar por el rest controler, genera respuesta de si un usuario
+	 * existe o no
+	 * 
 	 * @param email
 	 * @param password
-	 * @return Map<String>
+	 * @return User
 	 */
-	Map<String, Object> verificaUsuario(String email,String password);
+	User verificaUsuario(String email, String password);
+	
+	/**
+	 * revisa si un usario existe por email
+	 * @param email
+	 * @return boolean
+	 */
+	boolean existeUsuarioPorEmail(String email);
 }

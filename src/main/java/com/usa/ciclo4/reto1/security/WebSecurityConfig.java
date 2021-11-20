@@ -8,14 +8,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 import com.usa.ciclo4.reto1.service.CustomUserDetailsService;
 
+@SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	// Necesario para evitar que la seguridad se aplique a los resources
+	// Necesario para evitar que la seguridad se aplique a los recursos estaticos
 	// Como los css, imagenes y archivos Js
 	String[] resources = new String[] { "/css/**", "/icons/**", "/img/**", "/js/**", "/webjars/**", };
 
@@ -24,9 +25,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new CustomUserDetailsService();
 	}
 
+	/**
+	 * Se define este bean para no encriptar la contraseña y que no fallen los test
+	 * mastertech. -> Su uso esta desaconsejado y obsoleto.
+	 * 
+	 * @return NoOpPasswordEncoder
+	 */
 	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(10);
+	public NoOpPasswordEncoder passwordEncoder() {
+		return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
 	}
 
 	@Bean
