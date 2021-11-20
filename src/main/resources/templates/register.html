@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+	<title>Registro</title>
+</head>
+
+<body>
+	<div class="container">
+
+		<div class="col" style="margin: 0 auto 0; width: 70%">
+			<div class="card" style="margin-top: 10%; margin-bottom: 10%">
+				<div class="card-body">
+					<h4 class="card-title text-center">Registro de Usuario</h4>
+					<hr>
+
+					<form th:object="${user}" th:action="@{/register}" method="post">
+						<div class="m-3">
+
+							<div class="form-group row">
+								<label for="email" class="col-form-label col-5"><b>Nombre</b></label>
+								<div class="col-7">
+									<input th:field="*{name}" type="text" id="name-user" class="form-control"
+										placeholder="Escriba su nombre completo" />
+									<div class="alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+										style="padding-left: 20px;">Error
+										validacion nombre</div>
+								</div>
+							</div>
+
+
+							<div class="form-group row">
+								<label for="email" class="col-form-label col-5"><b>Email</b></label>
+								<div class="col-7">
+									<input th:field="*{email}" type="email" id="email-user" class="form-control"
+										placeholder="Escriba su e-mail" />
+									<div class="alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+										style="padding-left: 20px;">Error
+										validacion email</div>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label for="email" class="col-form-label col-5"><b>Contraseña</b></label>
+								<div class="col-7">
+									<input th:field="*{password}" type="password" id="password-user"
+										class="form-control" placeholder="Escriba su contraseña" />
+									<div class="alert-danger" th:if="${#fields.hasErrors('password')}"
+										th:errors="*{password}" style="padding-left: 20px;">Error
+										validacion contraseña</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="email" class="col-form-label col-5"><b>Confirme
+										su contraseña</b></label>
+								<div class="col-7">
+									<input th:field="*{confirmPassword}" type="password" id="confirmPassword-user"
+										class="form-control" placeholder="Confirme su contraseña" />
+									<div class="alert-danger" th:if="${#fields.hasErrors('confirmPassword')}"
+										th:errors="*{confirmPassword}" style="padding-left: 20px;">Error
+										validacion confirmar contraseña</div>
+								</div>
+							</div>
+
+							<div class="container text-center">
+								<small>¿Ya tienes una cuenta? <a th:href="@{/login}">Inicia sesión aquí</a></small>
+							</div >
+
+						</div>
+						<div style="text-align: center">
+							<button type="submit" class="btn btn-primary" style="width: 50%;">Registrarme</button>
+						</div>
+
+						<div class="alert alert-danger text-center m-3"
+							th:if="${validationError != null and !validationError.empty}">
+							<h6 th:text="${validationError}" style="font-weight: bold"></h6>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

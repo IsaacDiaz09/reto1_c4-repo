@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+	<title>Login</title>
+</head>
+
+<body>
+	<div class="container">
+
+		<div class="col" style="margin: 0 auto 0; width: 70%">
+			<div class="card" style="margin-top: 15%; margin-bottom: 20%">
+				<div class="card-body">
+					<h4 class="card-title text-center">Iniciar sesión</h4>
+					<hr>
+					<form th:action="@{/login}" th:object="${user}" method="post">
+						<div class="m-3">
+
+							<div th:if="${param.error}" class="alert alert-danger text-center" role="alert">Usuario
+								o contraseña incorrectos</div>
+
+							<div class="form-group row">
+								<label for="email" class="col-form-label col-5"><b>E-mail</b></label>
+								<div class="col-7">
+									<input type="email" id="email-user" name="email" class="form-control"
+										placeholder="Escriba su email" />
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label for="password" class="col-form-label col-5"><b>Contraseña</b></label>
+								<div class="col-7">
+									<input type="password" id="password-user" name="password" class="form-control"
+										placeholder="Escriba su contraseña" />
+								</div>
+							</div>
+
+							<div th:if="${param.error}" class="container text-center m-2">
+								<small>¿No tienes una cuenta? <a th:href="@{/register}">Registráte</a></small>
+							</div>
+
+							<div style="text-align: center">
+								<button type="submit" class="btn btn-primary" style="width: 50%;">Ingresar</button>
+							</div>
+
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
