@@ -61,8 +61,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User verificaUsuario(String email, String password) {
 		Optional<User> userAux = repo.buscarPorEmail(email);
-		User userNotFound = new User(null, email, password, "NO DEFINIDO");
-
+		User userNotFound = new User();
+		userNotFound.setId(null);
+		userNotFound.setEmail(email);
+		userNotFound.setPassword(password);
+		userNotFound.setName("NO DEFINIDO");
+		
 		if (userAux.isPresent()) {
 			return userAux.get();
 

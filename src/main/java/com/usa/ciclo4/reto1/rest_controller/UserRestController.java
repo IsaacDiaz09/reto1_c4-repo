@@ -3,13 +3,11 @@ package com.usa.ciclo4.reto1.rest_controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.usa.ciclo4.reto1.model.User;
@@ -25,21 +23,17 @@ public class UserRestController {
 	@Autowired
 	private UserServiceImpl service;
 
-	@GetMapping("/all")
-	private List<User> traerUsuarios() {
-		log.info("Entregando lista de usuarios por peticion rest...");
-		return service.listUsers();
-	}
-
-	@PostMapping("/new")
-	@ResponseStatus(HttpStatus.CREATED)
-	private void guardarIsuario(@RequestBody User user) {
-		log.info("Guardando un nuevo usuario en la DB");
+	@PostMapping("/all")
+	private List<User> traerUsuarios(@RequestBody User user) {
 		try {
+			log.info("Guardando un nuevo usuario en la DB");
+			user.setConfirmPassword(user.getPassword());
 			service.createUser(user);
 		} catch (Exception ex) {
 			log.error(ex.getMessage());
 		}
+		log.info("Entregando lista de usuarios por peticion rest...");
+		return service.listUsers();
 	}
 
 	@GetMapping("/{email}")

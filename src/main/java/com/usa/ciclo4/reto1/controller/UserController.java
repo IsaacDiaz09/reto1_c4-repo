@@ -21,9 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class UserController {
 
-	/**
-	 * Inyeccion de dependencia requerida
-	 */
 	@Autowired
 	private UserServiceImpl userService;
 

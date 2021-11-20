@@ -14,11 +14,13 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @JsonIgnoreProperties("confirmPassword")
 @Table(name = "users")
@@ -30,22 +32,22 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 
 	@Email(message = "El email proporcionado no es valido")
 	@NotBlank(message = "El email es requerido")
 	@Column(unique = true)
 	private String email;
-
-	@NotBlank(message = "El nombre es requerido")
-	@Size(min = 3, max = 60, message = "Su nombre debe tener entre 3 y 80 caracteres")
-	@Column(length = 80)
-	private String name;
-
+	
 	@NotBlank(message = "La contraseña es requerida")
 	@Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
 	@Column(length = 60)
 	private String password;
+	
+	@NotBlank(message = "El nombre es requerido")
+	@Size(min = 3, max = 60, message = "Su nombre debe tener entre 3 y 80 caracteres")
+	@Column(length = 80)
+	private String name;
 
 	@NotBlank(message = "Debe confirmar su contraseña")
 	@Column(length = 60)
@@ -57,13 +59,11 @@ public class User implements Serializable {
 	 * @param email
 	 * @param name
 	 * @param password
-	 * @param confirmPassword
 	 */
-	public User(String email, String name, String password, String confirmPassword) {
+	public User(String email, String password, String name, String confirmPassword) {
 		this.email = email;
-		this.name = name;
 		this.password = password;
-		this.confirmPassword = confirmPassword;
+		this.name = name;
 	}
 
 }
